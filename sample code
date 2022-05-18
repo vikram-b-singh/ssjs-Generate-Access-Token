@@ -1,0 +1,45 @@
+  <script runat="server">
+    Platform.Load("Core", "1.1.1");
+
+
+    var setup = {
+      authBaseURI: "https://{url-from-installed-pacakge}.auth.marketingcloudapis.com/",
+      restBaseURI: "https://{url-from-installed-pacakge}.rest.marketingcloudapis.com/",
+      clientId: "rk6dxf250t16cazcuav2y0154",
+      clientSecret: "RDQ2gJ72Z470CF2vLfc62Vxy12",
+      accountId: {mid}
+    }
+    var access_Token;
+    
+    try {
+      var tokenReceived = getToken(setup);
+      var success = false;
+      if (tokenReceived)
+            // do your stuff
+    }
+    catch (err) {
+      Write("Error: " + Stringify(err));
+    }
+ 
+
+ function getToken(setup) {
+      var config = {
+        url : setup.authBaseURI + "v2/token",
+        contentType : "application/json",
+        payload : {
+          "client_id": setup.clientId,
+          "client_secret": setup.clientSecret,
+          "account_id" : setup.accountId,
+          "grant_type": "client_credentials"
+        }
+      }
+      var req = HTTP.Post(config.url, config.contentType, Stringify(config.payload));
+      if (req.StatusCode == 200) {
+        var res = Platform.Function.ParseJSON(req.Response[0]);
+        access_Token = res.access_token;
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
