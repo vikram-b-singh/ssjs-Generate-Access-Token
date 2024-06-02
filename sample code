@@ -43,3 +43,13 @@
         return false;
       }
     }
+
+</script>
+/* Following is additional code to get 'expires_in' and use that
+       expires_In = res['expires_in']
+      tokenExpiryTime = new Date(Now()+expires_In*1000); 
+
+      if(Now() > tokenExpiryTime) // token is expired 
+*/
+
+
